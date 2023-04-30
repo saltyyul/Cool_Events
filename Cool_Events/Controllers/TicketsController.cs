@@ -48,8 +48,8 @@ namespace Cool_Events.Controllers
         // GET: Tickets/Create
         public IActionResult Create()
         {
-            ViewData["EventId"] = new SelectList(_context.Event, "Id", "Id");
-            ViewData["UserId"] = new SelectList(_context.User, "Id", "Id");
+            ViewData["EventId"] = new SelectList(_context.Event, "Id", "Name");
+            ViewData["UserId"] = new SelectList(_context.Users, "Id", "UserName");
             return View();
         }
 
@@ -58,16 +58,16 @@ namespace Cool_Events.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("UserId,EventId,Id,Created,Updated,CreatedById,UpdatedById")] Ticket ticket)
+        public async Task<IActionResult> Create([Bind("UserId,EventId")] Ticket ticket)
         {
-            if (ModelState.IsValid)
-            {
+           //if (ModelState.IsValid)
+            //{
                 _context.Add(ticket);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
-            }
-            ViewData["EventId"] = new SelectList(_context.Event, "Id", "Id", ticket.EventId);
-            ViewData["UserId"] = new SelectList(_context.User, "Id", "Id", ticket.UserId);
+            //}
+            ViewData["EventId"] = new SelectList(_context.Event, "Id", "Name", ticket.EventId);
+            ViewData["UserId"] = new SelectList(_context.Users, "Id", "UserName", ticket.UserId);
             return View(ticket);
         }
 
@@ -84,8 +84,8 @@ namespace Cool_Events.Controllers
             {
                 return NotFound();
             }
-            ViewData["EventId"] = new SelectList(_context.Event, "Id", "Id", ticket.EventId);
-            ViewData["UserId"] = new SelectList(_context.User, "Id", "Id", ticket.UserId);
+            ViewData["EventId"] = new SelectList(_context.Event, "Id", "Name", ticket.EventId);
+            ViewData["UserId"] = new SelectList(_context.Users, "Id", "UserName", ticket.UserId);
             return View(ticket);
         }
 
@@ -121,8 +121,8 @@ namespace Cool_Events.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["EventId"] = new SelectList(_context.Event, "Id", "Id", ticket.EventId);
-            ViewData["UserId"] = new SelectList(_context.User, "Id", "Id", ticket.UserId);
+            ViewData["EventId"] = new SelectList(_context.Event, "Id", "Name", ticket.EventId);
+            ViewData["UserId"] = new SelectList(_context.Users, "Id", "UserName", ticket.UserId);
             return View(ticket);
         }
 

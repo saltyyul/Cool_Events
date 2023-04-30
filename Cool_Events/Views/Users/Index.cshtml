@@ -1,4 +1,4 @@
-﻿@model Cool_Events.Data.User
+﻿@model IEnumerable<Cool_Events.Data.User>
 
 @{
     ViewData["Title"] = "Index";
@@ -9,7 +9,7 @@
 <p>
     <a asp-action="Create">Create New</a>
 </p>
-<@*table class="table">
+<table class="table">
     <thead>
         <tr>
             <th>
@@ -37,25 +37,22 @@
         {
             <tr>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Name)
+                    @Html.DisplayFor(modelItem => item.UserName)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Description)
+                    @Html.DisplayFor(modelItem => item.FirstName)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Date)
+                    @Html.DisplayFor(modelItem => item.LastName)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Created)
+                    @Html.DisplayFor(modelItem => item.Email)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Updated)
+                    @Html.DisplayFor(modelItem => item.EmailConfirmed)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.CreatedById)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.UpdatedById)
+                    @Html.DisplayFor(modelItem => item.PasswordHash)
                 </td>
                 <td>
                     <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
@@ -66,4 +63,3 @@
         }
     </tbody>
 </table>
-*@
