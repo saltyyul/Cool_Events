@@ -19,12 +19,21 @@
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
+                        @using Microsoft.AspNetCore.Identity
+                        @inject UserManager<IdentityUser> UserManager
+
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Events" asp-action="Index">Events</a>
-                        </li>
+                        @if (User.Identity.Name != null)
+                        {
+                            @if (UserManager.IsInRoleAsync(await UserManager.GetUserAsync(User), "admin").Result)
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Events" asp-action="Index">Events</a>
+                                </li>
+                            }
+                        }
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Tickets" asp-action="Index">Tickets</a>
                         </li>
