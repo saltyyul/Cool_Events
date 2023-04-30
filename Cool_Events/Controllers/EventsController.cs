@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Cool_Events.Data;
 using Microsoft.AspNetCore.Authorization;
+using Cool_Events.Models.EventVMS;
 
 namespace Cool_Events.Controllers
 {
@@ -59,14 +60,32 @@ namespace Cool_Events.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Name,Description,ImageURL,Date,Id,Created,Updated,CreatedById,UpdatedById")] Event @event)
+        //([Bind("Name,Description,ImageURL,Date,Id,Created,Updated,CreatedById,UpdatedById")] Event @event)
+        //([FromForm] EventVM eventView, IFormFile? imageFile)
+        public async Task<IActionResult> Create([Bind("Name,Description,ImageURL,Date,Id,Created,Updated,CreatedById,UpdatedById")] Event @event, IFormFile? imageFile)
         {
             if (ModelState.IsValid)
             {
+                if (imageFile != null && imageFile.Length > 0)
+                { 
+                    var fileNameWithExtension = Path.GetFileName(imageFile.FileName);
+                    var fileName = fileNameWithExtension.Split('.')[0].Trim() + DateTime.Now.ToString("yyyMMddHHmmssff");
+                    var extension = fileNameWithExtension.Split('.')[1].Trim();
+                    var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "image", String.Concat(fileName, '.', extension));
+
+                    using (var stream = new FileStream(filePath, FileMode.Create))
+                    {
+                        await imageFile.CopyToAsync(stream);
+                    }
+
+                    @event.ImageURL = "/image/" + String.Concat(fileName, '.', extension);
+                }
+
                 _context.Add(@event);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+            
             return View(@event);
         }
 

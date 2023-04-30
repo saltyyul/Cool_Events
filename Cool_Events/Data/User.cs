@@ -10,6 +10,8 @@ namespace Cool_Events.Data
         {
             Ticket = new HashSet<Ticket>();
         }
+
+
         public string FirstName { get; set; }
         public string LastName { get; set; }
 

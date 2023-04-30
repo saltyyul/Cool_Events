@@ -6,7 +6,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Cool_Events.Data;
-using Microsoft.AspNetCore.Authorization;
 
 namespace Cool_Events.Controllers
 {
@@ -47,7 +46,6 @@ namespace Cool_Events.Controllers
         }
 
         // GET: Tickets/Create
-        [Authorize]
         public IActionResult Create()
         {
             ViewData["EventId"] = new SelectList(_context.Event, "Id", "Id");
@@ -74,7 +72,6 @@ namespace Cool_Events.Controllers
         }
 
         // GET: Tickets/Edit/5
-        [Authorize]
         public async Task<IActionResult> Edit(string id)
         {
             if (id == null || _context.Tickets == null)
@@ -130,7 +127,6 @@ namespace Cool_Events.Controllers
         }
 
         // GET: Tickets/Delete/5
-        [Authorize]
         public async Task<IActionResult> Delete(string id)
         {
             if (id == null || _context.Tickets == null)

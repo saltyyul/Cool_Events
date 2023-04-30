@@ -1,4 +1,5 @@
 ﻿@model IEnumerable<Cool_Events.Data.Event>
+@*@model IEnumerable<Cool_Events.Models.EventVMS.EventVM>*@
 
 @{
     ViewData["Title"] = "Index";
@@ -18,6 +19,9 @@
             <th>
                 @Html.DisplayNameFor(model => model.Description)
             </th>
+            @*<th>
+                @Html.DisplayNameFor(model => model.ImageFile)
+            </th>*@
             <th>
                 @Html.DisplayNameFor(model => model.ImageURL)
             </th>
@@ -36,7 +40,6 @@
             <th>
                 @Html.DisplayNameFor(model => model.UpdatedById)
             </th>
-            <th></th>
         </tr>
     </thead>
     <tbody>
@@ -50,6 +53,14 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.ImageURL)
+                   @* @if (string.IsNullOrEmpty(item.ImageURL))
+                    {
+                        <p>No event image</p>
+                    }
+                    else
+                    {
+                        <img class="thumbnail" src="@item.ImageURL" alt=@string.Concat(item.Name, " ", item.Description) />
+                    }*@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Date)
